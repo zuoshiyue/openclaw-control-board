@@ -4,7 +4,10 @@
     <header class="header">
       <div class="header-left">
         <span class="header-icon">⚙️</span>
-        <h1 class="header-title">设置</h1>
+        <div class="header-title-group">
+          <h1 class="header-title">OpenClaw</h1>
+          <span class="header-subtitle">设置</span>
+        </div>
       </div>
       <div class="header-actions">
         <button class="btn btn-reset">重置</button>
@@ -79,27 +82,47 @@
         <h2 class="section-title">⏰ 定时任务</h2>
         <div class="task-list">
           <div class="task-item">
-            <span class="task-name">早班推送</span>
+            <span class="task-icon">📰</span>
+            <div class="task-info">
+              <span class="task-name">早班推送</span>
+              <span class="task-desc">08:00 执行</span>
+            </div>
             <input type="time" value="08:00" class="task-time" />
             <span class="task-status success">启用</span>
           </div>
           <div class="task-item">
-            <span class="task-name">基金分析</span>
+            <span class="task-icon">🦉</span>
+            <div class="task-info">
+              <span class="task-name">基金分析</span>
+              <span class="task-desc">09:10/21:00</span>
+            </div>
             <input type="time" value="09:10" class="task-time" />
             <span class="task-status success">启用</span>
           </div>
           <div class="task-item">
-            <span class="task-name">成本检查</span>
+            <span class="task-icon">💰</span>
+            <div class="task-info">
+              <span class="task-name">成本检查</span>
+              <span class="task-desc">09:20 执行</span>
+            </div>
             <input type="time" value="09:20" class="task-time" />
             <span class="task-status success">启用</span>
           </div>
           <div class="task-item">
-            <span class="task-name">配置备份</span>
+            <span class="task-icon">💾</span>
+            <div class="task-info">
+              <span class="task-name">配置备份</span>
+              <span class="task-desc">03:00 执行</span>
+            </div>
             <input type="time" value="03:00" class="task-time" />
             <span class="task-status success">启用</span>
           </div>
           <div class="task-item">
-            <span class="task-name">每日进化报告</span>
+            <span class="task-icon">📊</span>
+            <div class="task-info">
+              <span class="task-name">每日进化报告</span>
+              <span class="task-desc">23:00 执行</span>
+            </div>
             <input type="time" value="23:00" class="task-time" />
             <span class="task-status success">启用</span>
           </div>
@@ -112,26 +135,53 @@
         <div class="checkbox-group">
           <label class="checkbox-label">
             <input type="checkbox" checked />
-            <span>启用向量索引</span>
+            <span class="checkbox-text">启用向量索引</span>
           </label>
         </div>
         <div class="checkbox-group">
           <label class="checkbox-label">
             <input type="checkbox" checked />
-            <span>启用子 Agent 模式</span>
+            <span class="checkbox-text">启用子 Agent 模式</span>
           </label>
         </div>
         <div class="checkbox-group">
           <label class="checkbox-label">
             <input type="checkbox" />
-            <span>调试模式</span>
+            <span class="checkbox-text">调试模式</span>
           </label>
         </div>
         <div class="checkbox-group">
           <label class="checkbox-label">
             <input type="checkbox" checked />
-            <span>自动备份配置</span>
+            <span class="checkbox-text">自动备份配置</span>
           </label>
+        </div>
+      </section>
+
+      <!-- Tailscale 配置 -->
+      <section class="config-section">
+        <h2 class="section-title">🌐 Tailscale 配置</h2>
+        <div class="form-group">
+          <label class="form-label">Tailscale 状态</label>
+          <div class="status-row">
+            <span class="status-dot"></span>
+            <span class="status-text">已连接</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">设备名称</label>
+          <input type="text" value="zuoshiyue-macmini" class="form-input" disabled />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tailscale IP</label>
+          <input type="text" value="100.x.x.x" class="form-input" disabled />
+        </div>
+        <div class="form-group">
+          <label class="form-label">看板访问地址</label>
+          <div class="access-url">
+            <code>http://100.x.x.x:5173</code>
+            <button class="copy-btn">复制</button>
+          </div>
         </div>
       </section>
     </main>
@@ -162,13 +212,13 @@
 </template>
 
 <script setup>
-// 配置编辑页面
+// OpenClaw 配置编辑页面
 </script>
 
 <style scoped>
 .config {
   min-height: 100vh;
-  background: linear-gradient(180deg, #F3E8FF 0%, #E9D5FF 100%);
+  background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
   padding-bottom: 80px;
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans', sans-serif;
   display: flex;
@@ -181,6 +231,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .header-left {
@@ -190,14 +243,28 @@
 }
 
 .header-icon {
-  font-size: 1.75rem;
+  font-size: 2rem;
+}
+
+.header-title-group {
+  display: flex;
+  flex-direction: column;
 }
 
 .header-title {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #6B21A8;
+  color: #ffffff;
   margin: 0;
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-subtitle {
+  font-size: 0.75rem;
+  color: #94a3b8;
 }
 
 .header-actions {
@@ -212,26 +279,37 @@
   font-weight: 500;
   border: none;
   cursor: pointer;
+  transition: all 0.2s;
 }
 
 .btn-reset {
-  background: rgba(255, 255, 255, 0.8);
-  color: #6B7280;
+  background: rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+}
+
+.btn-reset:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .btn-save {
-  background: #7C3AED;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: white;
+}
+
+.btn-save:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
 }
 
 /* 内容区域 */
 .content {
   flex: 1;
-  padding: 0 1rem;
+  padding: 1rem;
 }
 
 .config-section {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -240,7 +318,7 @@
 .section-title {
   font-size: 1rem;
   font-weight: 600;
-  color: #6B21A8;
+  color: #f1f5f9;
   margin-bottom: 1rem;
 }
 
@@ -256,25 +334,36 @@
 .form-label {
   display: block;
   font-size: 0.75rem;
-  color: #6B7280;
+  color: #94a3b8;
   margin-bottom: 0.5rem;
 }
 
 .form-input,
 .form-select {
   width: 100%;
-  background: #F3F4F6;
-  border: 1px solid #E5E7EB;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.75rem;
   border-radius: 12px;
   font-size: 0.875rem;
-  color: #1F2937;
+  color: #f1f5f9;
 }
 
 .form-input:focus,
 .form-select:focus {
   outline: none;
-  border-color: #7C3AED;
+  border-color: rgba(99, 102, 241, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.form-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-select option {
+  background: #1a1a2e;
+  color: #f1f5f9;
 }
 
 /* 任务列表 */
@@ -287,25 +376,41 @@
 .task-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.75rem;
-  background: #F9FAFB;
+  gap: 0.75rem;
+  padding: 0.875rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 12px;
 }
 
-.task-name {
+.task-icon {
+  font-size: 1.25rem;
+}
+
+.task-info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-name {
   font-size: 0.875rem;
-  color: #1F2937;
+  color: #f1f5f9;
+  font-weight: 500;
+}
+
+.task-desc {
+  font-size: 0.625rem;
+  color: #64748b;
 }
 
 .task-time {
-  background: white;
-  border: 1px solid #E5E7EB;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.375rem 0.5rem;
   border-radius: 8px;
   font-size: 0.75rem;
-  color: #1F2937;
+  color: #f1f5f9;
 }
 
 .task-status {
@@ -316,13 +421,18 @@
 }
 
 .task-status.success {
-  background: #D1FAE5;
-  color: #059669;
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.3);
 }
 
 /* 复选框 */
 .checkbox-group {
   margin-bottom: 0.75rem;
+}
+
+.checkbox-group:last-child {
+  margin-bottom: 0;
 }
 
 .checkbox-label {
@@ -335,12 +445,66 @@
 .checkbox-label input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: #7C3AED;
+  accent-color: #6366f1;
 }
 
-.checkbox-label span {
+.checkbox-text {
   font-size: 0.875rem;
-  color: #1F2937;
+  color: #f1f5f9;
+}
+
+/* Tailscale 配置 */
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse-dot 2s infinite;
+}
+
+.status-text {
+  font-size: 0.875rem;
+  color: #4ade80;
+  font-weight: 500;
+}
+
+.access-url {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.access-url code {
+  flex: 1;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: #a5b4fc;
+}
+
+.copy-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #f1f5f9;
 }
 
 /* 底部导航栏 */
@@ -351,10 +515,10 @@
   right: 0;
   display: flex;
   justify-content: space-around;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(15, 15, 26, 0.95);
   backdrop-filter: blur(10px);
   padding: 0.75rem 0;
-  border-top: 1px solid rgba(233, 213, 255, 0.5);
+  border-top: 1px solid rgba(99, 102, 241, 0.3);
 }
 
 .tab-item {
@@ -363,12 +527,12 @@
   align-items: center;
   gap: 0.25rem;
   text-decoration: none;
-  color: #9CA3AF;
+  color: #64748b;
   transition: color 0.2s;
 }
 
 .tab-item.active {
-  color: #7C3AED;
+  color: #818cf8;
 }
 
 .tab-icon {
@@ -378,5 +542,10 @@
 .tab-label {
   font-size: 0.625rem;
   font-weight: 500;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 </style>

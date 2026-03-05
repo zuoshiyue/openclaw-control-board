@@ -4,9 +4,15 @@
     <header class="header">
       <div class="header-left">
         <span class="header-icon">💬</span>
-        <h1 class="header-title">终端聊天</h1>
+        <div class="header-title-group">
+          <h1 class="header-title">OpenClaw</h1>
+          <span class="header-subtitle">终端聊天</span>
+        </div>
       </div>
-      <button class="connect-btn">连接 Gateway</button>
+      <button class="connect-btn">
+        <span class="connect-dot"></span>
+        连接 Gateway
+      </button>
     </header>
 
     <main class="content">
@@ -16,7 +22,8 @@
           <!-- 系统消息 -->
           <div class="message system">
             <div class="message-content">
-              <span class="message-text">🤖 OpenClaw Gateway 已连接</span>
+              <span class="message-icon">🤖</span>
+              <span class="message-text">OpenClaw Gateway 已连接</span>
               <span class="message-time">11:30:00</span>
             </div>
           </div>
@@ -32,7 +39,7 @@
 
           <!-- AI 消息 -->
           <div class="message assistant">
-            <div class="message-avatar">🦞</div>
+            <div class="message-avatar">🦑</div>
             <div class="message-bubble assistant-bubble">
               <span class="message-text">好的，左先生！我正在识别您的基金持仓截图...</span>
               <span class="message-text">已识别到 9 只基金：</span>
@@ -44,12 +51,25 @@
               <span class="message-time">11:30:45</span>
             </div>
           </div>
+
+          <!-- 带代码的消息 -->
+          <div class="message assistant">
+            <div class="message-avatar">🦑</div>
+            <div class="message-bubble assistant-bubble">
+              <span class="message-text">已为您更新文档到正确位置：</span>
+              <pre class="code-block"><code>docs/金融投资/基金持仓全景分析.md</code></pre>
+              <span class="message-time">11:31:00</span>
+            </div>
+          </div>
         </div>
 
         <!-- 输入区域 -->
         <div class="input-area">
           <input type="text" placeholder="输入消息..." class="message-input" />
-          <button class="send-btn">发送</button>
+          <button class="send-btn">
+            <span>发送</span>
+            <span class="send-icon">➤</span>
+          </button>
         </div>
       </div>
     </main>
@@ -80,13 +100,13 @@
 </template>
 
 <script setup>
-// 终端聊天页面
+// OpenClaw 终端聊天页面
 </script>
 
 <style scoped>
 .terminal {
   min-height: 100vh;
-  background: linear-gradient(180deg, #F3E8FF 0%, #E9D5FF 100%);
+  background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
   padding-bottom: 80px;
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans', sans-serif;
   display: flex;
@@ -99,6 +119,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .header-left {
@@ -108,36 +131,68 @@
 }
 
 .header-icon {
-  font-size: 1.75rem;
+  font-size: 2rem;
+}
+
+.header-title-group {
+  display: flex;
+  flex-direction: column;
 }
 
 .header-title {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #6B21A8;
+  color: #ffffff;
   margin: 0;
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-subtitle {
+  font-size: 0.75rem;
+  color: #94a3b8;
 }
 
 .connect-btn {
-  background: #7C3AED;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.625rem 1.25rem;
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.connect-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+}
+
+.connect-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse-dot 2s infinite;
 }
 
 /* 内容区域 */
 .content {
   flex: 1;
-  padding: 0 1rem;
+  padding: 1rem;
 }
 
 .chat-container {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -153,7 +208,7 @@
 .message {
   display: flex;
   gap: 0.75rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .message.system {
@@ -161,11 +216,19 @@
 }
 
 .message.system .message-content {
-  background: rgba(124, 58, 237, 0.1);
+  background: rgba(99, 102, 241, 0.15);
+  border: 1px solid rgba(99, 102, 241, 0.3);
   padding: 0.5rem 1rem;
   border-radius: 9999px;
   font-size: 0.75rem;
-  color: #7C3AED;
+  color: #a5b4fc;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.message.system .message-icon {
+  font-size: 1rem;
 }
 
 .message.user {
@@ -187,19 +250,21 @@
 }
 
 .user-bubble {
-  background: linear-gradient(135deg, #DDD6FE 0%, #C4B5FD 100%);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.3) 0%, rgba(139, 92, 246, 0.3) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.4);
   border-bottom-right-radius: 4px;
 }
 
 .assistant-bubble {
-  background: #F3F4F6;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom-left-radius: 4px;
 }
 
 .message-text {
   font-size: 0.875rem;
-  color: #1F2937;
-  line-height: 1.5;
+  color: #f1f5f9;
+  line-height: 1.6;
 }
 
 .message-list {
@@ -209,14 +274,30 @@
 
 .message-list li {
   font-size: 0.75rem;
-  color: #4B5563;
+  color: #cbd5e1;
   margin-bottom: 0.25rem;
 }
 
 .message-time {
   font-size: 0.625rem;
-  color: #9CA3AF;
+  color: #64748b;
   text-align: right;
+}
+
+/* 代码块 */
+.code-block {
+  background: rgba(15, 15, 26, 0.8);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+  overflow-x: auto;
+}
+
+.code-block code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: #a5b4fc;
 }
 
 /* 输入区域 */
@@ -224,34 +305,52 @@
   display: flex;
   gap: 0.75rem;
   padding: 1rem;
-  border-top: 1px solid #E5E7EB;
-  background: white;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 15, 26, 0.5);
 }
 
 .message-input {
   flex: 1;
-  background: #F3F4F6;
-  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.75rem 1rem;
   border-radius: 12px;
   font-size: 0.875rem;
-  color: #1F2937;
+  color: #f1f5f9;
 }
 
 .message-input:focus {
   outline: none;
-  background: #E5E7EB;
+  border-color: rgba(99, 102, 241, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.message-input::placeholder {
+  color: #64748b;
 }
 
 .send-btn {
-  background: #7C3AED;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   border-radius: 12px;
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.send-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+.send-icon {
+  font-size: 1rem;
 }
 
 /* 底部导航栏 */
@@ -262,10 +361,10 @@
   right: 0;
   display: flex;
   justify-content: space-around;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(15, 15, 26, 0.95);
   backdrop-filter: blur(10px);
   padding: 0.75rem 0;
-  border-top: 1px solid rgba(233, 213, 255, 0.5);
+  border-top: 1px solid rgba(99, 102, 241, 0.3);
 }
 
 .tab-item {
@@ -274,12 +373,12 @@
   align-items: center;
   gap: 0.25rem;
   text-decoration: none;
-  color: #9CA3AF;
+  color: #64748b;
   transition: color 0.2s;
 }
 
 .tab-item.active {
-  color: #7C3AED;
+  color: #818cf8;
 }
 
 .tab-icon {
@@ -289,5 +388,10 @@
 .tab-label {
   font-size: 0.625rem;
   font-weight: 500;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 </style>
