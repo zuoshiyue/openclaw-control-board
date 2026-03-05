@@ -1,118 +1,203 @@
 <template>
-  <div class="flex flex-col h-screen pb-16 md:pb-0">
-    <header class="glass border-b border-white/10 p-4">
-      <h1 class="text-xl font-bold">📜 日志</h1>
-      <p class="text-xs text-gray-400 mt-1">实时日志流</p>
+  <div class="logs">
+    <header class="header glass">
+      <h1>📜 日志查询</h1>
+      <div class="filters">
+        <select class="select">
+          <option>全部级别</option>
+          <option>INFO</option>
+          <option>WARNING</option>
+          <option>ERROR</option>
+        </select>
+        <input type="text" placeholder="搜索日志..." class="input" />
+        <button class="btn btn-primary">查询</button>
+      </div>
     </header>
 
-    <!-- 过滤工具栏 -->
-    <div class="glass border-b border-white/10 p-4">
-      <div class="flex flex-wrap gap-2 mb-3">
-        <button 
-          v-for="level in levels" 
-          :key="level"
-          @click="selectedLevel = level"
-          class="px-3 py-1 rounded text-xs transition-all"
-          :class="selectedLevel === level ? 'bg-accent text-white' : 'bg-white/10 text-gray-400 hover:bg-white/20'"
-        >
-          {{ level }}
-        </button>
-      </div>
-      <div class="flex gap-2">
-        <input 
-          v-model="searchKeyword"
-          type="text" 
-          placeholder="搜索关键词..."
-          class="flex-1 bg-white/5 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-accent"
-        />
-        <button @click="toggleAutoScroll" class="px-3 py-2 bg-white/10 hover:bg-white/20 rounded text-xs transition-all">
-          {{ autoScroll ? '⏸️ 暂停' : '▶️ 自动滚动' }}
-        </button>
-      </div>
-    </div>
+    <main class="content">
+      <div class="log-container glass">
+        <div class="log-entry">
+          <span class="log-time">2026-03-05 11:30:45.123</span>
+          <span class="log-level info">INFO</span>
+          <span class="log-source">Gateway</span>
+          <span class="log-message">请求处理完成 - session_001 - 耗时 234ms</span>
+        </div>
 
-    <!-- 日志内容区 -->
-    <div class="flex-1 overflow-auto p-4 font-mono text-xs bg-black/20" ref="logContainer">
-      <div v-for="(log, index) in filteredLogs" :key="index" class="mb-1 hover:bg-white/5 p-1 rounded">
-        <span class="text-gray-500 mr-2">{{ log.time }}</span>
-        <span class="mr-2" :class="{
-          'text-green-400': log.level === 'INFO',
-          'text-yellow-400': log.level === 'WARN',
-          'text-red-400': log.level === 'ERROR'
-        }">[{{ log.level }}]</span>
-        <span class="text-gray-300" v-html="highlightKeyword(log.message)"></span>
+        <div class="log-entry">
+          <span class="log-time">2026-03-05 11:30:44.890</span>
+          <span class="log-level info">INFO</span>
+          <span class="log-source">Feishu</span>
+          <span class="log-message">消息发送成功 - om_x100b55bb73a7688cb29f2deae4db3d9</span>
+        </div>
+
+        <div class="log-entry">
+          <span class="log-time">2026-03-05 11:30:43.567</span>
+          <span class="log-level warning">WARNING</span>
+          <span class="log-source">Memory</span>
+          <span class="log-message">向量索引更新延迟 - 当前队列长度：15</span>
+        </div>
+
+        <div class="log-entry">
+          <span class="log-time">2026-03-05 11:30:42.234</span>
+          <span class="log-level info">INFO</span>
+          <span class="log-source">Agent</span>
+          <span class="log-message">子 Agent 任务完成 - 基金分析 - Token: 8,230</span>
+        </div>
+
+        <div class="log-entry">
+          <span class="log-time">2026-03-05 11:30:40.100</span>
+          <span class="log-level error">ERROR</span>
+          <span class="log-source">Cron</span>
+          <span class="log-message">定时任务执行失败 - task:fund-analysis - 推送失败</span>
+        </div>
+
+        <div class="log-entry">
+          <span class="log-time">2026-03-05 11:30:38.890</span>
+          <span class="log-level info">INFO</span>
+          <span class="log-source">Gateway</span>
+          <span class="log-message">WebSocket 连接建立 - client_id: ws_001</span>
+        </div>
+
+        <div class="log-entry">
+          <span class="log-time">2026-03-05 11:30:36.567</span>
+          <span class="log-level info">INFO</span>
+          <span class="log-source">Feishu</span>
+          <span class="log-message">收到用户消息 - ou_81ff6a748bdc9a5b1d69c253fcbaea90</span>
+        </div>
+
+        <div class="log-entry">
+          <span class="log-time">2026-03-05 11:30:34.234</span>
+          <span class="log-level info">INFO</span>
+          <span class="log-source">Session</span>
+          <span class="log-message">新会话创建 - session_003 - 模型：glm-4.7</span>
+        </div>
       </div>
-      <div v-if="filteredLogs.length === 0" class="text-gray-500 text-center py-8">
-        暂无日志
-      </div>
-    </div>
+    </main>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, nextTick, onUnmounted } from 'vue'
-
-const levels = ['全部', 'INFO', 'WARN', 'ERROR']
-const selectedLevel = ref('全部')
-const searchKeyword = ref('')
-const autoScroll = ref(true)
-const logContainer = ref(null)
-
-// Mock 日志数据
-const logs = ref([])
-const generateMockLog = () => {
-  const level = ['INFO', 'INFO', 'INFO', 'WARN', 'ERROR'][Math.floor(Math.random() * 5)]
-  const messages = {
-    INFO: ['Gateway 心跳正常', '会话创建成功', '配置已加载', '定时任务执行完成', 'WebSocket 连接建立'],
-    WARN: ['API 响应延迟较高', '内存使用率超过 80%', '会话空闲时间过长'],
-    ERROR: ['连接超时', '认证失败', '文件读取错误']
-  }
-  return {
-    time: new Date().toLocaleTimeString(),
-    level,
-    message: messages[level][Math.floor(Math.random() * messages[level].length)]
-  }
-}
-
-// 初始化一些日志
-for (let i = 0; i < 50; i++) {
-  logs.value.push(generateMockLog())
-}
-
-// 模拟实时日志
-let logTimer = setInterval(() => {
-  logs.value.push(generateMockLog())
-  if (logs.value.length > 500) logs.value.shift()
-  if (autoScroll.value) scrollToBottom()
-}, 2000)
-
-const filteredLogs = computed(() => {
-  return logs.value.filter(log => {
-    const levelMatch = selectedLevel.value === '全部' || log.level === selectedLevel.value
-    const keywordMatch = !searchKeyword.value || log.message.includes(searchKeyword.value)
-    return levelMatch && keywordMatch
-  })
-})
-
-const scrollToBottom = async () => {
-  await nextTick()
-  if (logContainer.value) {
-    logContainer.value.scrollTop = logContainer.value.scrollHeight
-  }
-}
-
-const toggleAutoScroll = () => {
-  autoScroll.value = !autoScroll.value
-  if (autoScroll.value) scrollToBottom()
-}
-
-const highlightKeyword = (text) => {
-  if (!searchKeyword.value) return text
-  const regex = new RegExp(`(${searchKeyword.value})`, 'gi')
-  return text.replace(regex, '<span class="bg-yellow-500/30 text-yellow-200">$1</span>')
-}
-
-onUnmounted(() => {
-  if (logTimer) clearInterval(logTimer)
-})
+// 日志查询页面
 </script>
+
+<style scoped>
+.logs {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+}
+
+.select,
+.input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.select:focus,
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+}
+
+.content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.log-container {
+  border-radius: 12px;
+  padding: 1rem;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+}
+
+.log-entry {
+  display: flex;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
+}
+
+.log-entry:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.log-time {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.log-level {
+  padding: 0.125rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.log-level.info {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--success);
+}
+
+.log-level.warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--warning);
+}
+
+.log-level.error {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--error);
+}
+
+.log-source {
+  color: var(--accent);
+  flex-shrink: 0;
+  width: 100px;
+}
+
+.log-message {
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
