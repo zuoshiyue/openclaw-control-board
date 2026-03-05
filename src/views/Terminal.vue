@@ -1,53 +1,81 @@
 <template>
   <div class="terminal">
-    <header class="header glass">
-      <h1>💬 终端聊天</h1>
-      <div class="controls">
-        <button class="btn btn-primary">连接 Gateway</button>
+    <!-- 头部 -->
+    <header class="header">
+      <div class="header-left">
+        <span class="header-icon">💬</span>
+        <h1 class="header-title">终端聊天</h1>
       </div>
+      <button class="connect-btn">连接 Gateway</button>
     </header>
 
     <main class="content">
-      <!-- 聊天区域 -->
-      <div class="chat-container glass">
+      <!-- 消息区域 -->
+      <div class="chat-container">
         <div class="messages">
+          <!-- 系统消息 -->
           <div class="message system">
             <div class="message-content">
-              <p>🤖 OpenClaw Gateway 已连接</p>
-              <span class="time">11:30:00</span>
+              <span class="message-text">🤖 OpenClaw Gateway 已连接</span>
+              <span class="message-time">11:30:00</span>
             </div>
           </div>
 
+          <!-- 用户消息 -->
           <div class="message user">
             <div class="message-avatar">👤</div>
-            <div class="message-content">
-              <p>分析我的基金持仓</p>
-              <span class="time">11:30:15</span>
+            <div class="message-bubble user-bubble">
+              <span class="message-text">分析我的基金持仓</span>
+              <span class="message-time">11:30:15</span>
             </div>
           </div>
 
+          <!-- AI 消息 -->
           <div class="message assistant">
-            <div class="message-avatar">🎭</div>
-            <div class="message-content">
-              <p>好的，左先生！我正在识别您的基金持仓截图...</p>
-              <p>已识别到 9 只基金：</p>
-              <ul>
+            <div class="message-avatar">🦞</div>
+            <div class="message-bubble assistant-bubble">
+              <span class="message-text">好的，左先生！我正在识别您的基金持仓截图...</span>
+              <span class="message-text">已识别到 9 只基金：</span>
+              <ul class="message-list">
                 <li>天弘安康颐睿一年持有混合 A - 5,230.53 元</li>
                 <li>广发安盈混合 E - 4,996.81 元</li>
                 <li>富国中证工业 4.0 指数 C - 1,058.57 元</li>
               </ul>
-              <span class="time">11:30:45</span>
+              <span class="message-time">11:30:45</span>
             </div>
           </div>
         </div>
 
         <!-- 输入区域 -->
         <div class="input-area">
-          <input type="text" placeholder="输入消息..." class="input" />
-          <button class="btn btn-send">发送</button>
+          <input type="text" placeholder="输入消息..." class="message-input" />
+          <button class="send-btn">发送</button>
         </div>
       </div>
     </main>
+
+    <!-- 底部导航栏 -->
+    <nav class="tab-bar">
+      <router-link to="/" class="tab-item">
+        <span class="tab-icon">🏠</span>
+        <span class="tab-label">首页</span>
+      </router-link>
+
+      <router-link to="/terminal" class="tab-item active">
+        <span class="tab-icon">💬</span>
+        <span class="tab-label">终端</span>
+      </router-link>
+
+      <router-link to="/logs" class="tab-item">
+        <span class="tab-icon">📄</span>
+        <span class="tab-label">日志</span>
+      </router-link>
+
+      <router-link to="/config" class="tab-item">
+        <span class="tab-icon">⚙️</span>
+        <span class="tab-label">设置</span>
+      </router-link>
+    </nav>
   </div>
 </template>
 
@@ -58,74 +86,74 @@
 <style scoped>
 .terminal {
   min-height: 100vh;
-  background: var(--bg-primary);
+  background: linear-gradient(180deg, #F3E8FF 0%, #E9D5FF 100%);
+  padding-bottom: 80px;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans', sans-serif;
   display: flex;
   flex-direction: column;
 }
 
+/* 头部 */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 1rem;
 }
 
-.header h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.controls {
+.header-left {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.btn {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s;
+.header-icon {
+  font-size: 1.75rem;
 }
 
-.btn-primary {
-  background: var(--accent);
+.header-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #6B21A8;
+  margin: 0;
+}
+
+.connect-btn {
+  background: #7C3AED;
   color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
 }
 
-.btn-primary:hover {
-  background: var(--accent-hover);
-}
-
+/* 内容区域 */
 .content {
   flex: 1;
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
+  padding: 0 1rem;
 }
 
 .chat-container {
-  width: 100%;
-  max-width: 900px;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  height: calc(100vh - 200px);
 }
 
 .messages {
   flex: 1;
-  padding: 1.5rem;
+  padding: 1rem;
   overflow-y: auto;
-  max-height: calc(100vh - 250px);
 }
 
 .message {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .message.system {
@@ -133,11 +161,11 @@
 }
 
 .message.system .message-content {
-  background: rgba(99, 102, 241, 0.2);
-  padding: 0.75rem 1.5rem;
+  background: rgba(124, 58, 237, 0.1);
+  padding: 0.5rem 1rem;
   border-radius: 9999px;
-  font-size: 0.9rem;
-  color: var(--accent);
+  font-size: 0.75rem;
+  color: #7C3AED;
 }
 
 .message.user {
@@ -145,72 +173,121 @@
 }
 
 .message-avatar {
-  font-size: 2rem;
-  min-width: 40px;
+  font-size: 1.75rem;
+  flex-shrink: 0;
 }
 
-.message-content {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 1rem;
-  border-radius: 12px;
-  max-width: 70%;
+.message-bubble {
+  max-width: 75%;
+  padding: 0.875rem 1rem;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.message.user .message-content {
-  background: var(--accent);
-  color: white;
+.user-bubble {
+  background: linear-gradient(135deg, #DDD6FE 0%, #C4B5FD 100%);
+  border-bottom-right-radius: 4px;
 }
 
-.message-content p {
-  margin-bottom: 0.5rem;
+.assistant-bubble {
+  background: #F3F4F6;
+  border-bottom-left-radius: 4px;
+}
+
+.message-text {
+  font-size: 0.875rem;
+  color: #1F2937;
   line-height: 1.5;
 }
 
-.message-content ul {
+.message-list {
   margin: 0.5rem 0;
-  padding-left: 1.5rem;
+  padding-left: 1rem;
 }
 
-.message-content li {
+.message-list li {
+  font-size: 0.75rem;
+  color: #4B5563;
   margin-bottom: 0.25rem;
 }
 
-.time {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  display: block;
-  margin-top: 0.5rem;
+.message-time {
+  font-size: 0.625rem;
+  color: #9CA3AF;
+  text-align: right;
 }
 
+/* 输入区域 */
 .input-area {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   padding: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid #E5E7EB;
+  background: white;
 }
 
-.input {
+.message-input {
   flex: 1;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  background: #F3F4F6;
+  border: none;
   padding: 0.75rem 1rem;
-  color: var(--text-primary);
-  font-size: 0.9rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  color: #1F2937;
 }
 
-.input:focus {
+.message-input:focus {
   outline: none;
-  border-color: var(--accent);
+  background: #E5E7EB;
 }
 
-.btn-send {
-  background: var(--accent);
+.send-btn {
+  background: #7C3AED;
   color: white;
+  border: none;
   padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
 }
 
-.btn-send:hover {
-  background: var(--accent-hover);
+/* 底部导航栏 */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 0.75rem 0;
+  border-top: 1px solid rgba(233, 213, 255, 0.5);
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+  color: #9CA3AF;
+  transition: color 0.2s;
+}
+
+.tab-item.active {
+  color: #7C3AED;
+}
+
+.tab-icon {
+  font-size: 1.25rem;
+}
+
+.tab-label {
+  font-size: 0.625rem;
+  font-weight: 500;
 }
 </style>
