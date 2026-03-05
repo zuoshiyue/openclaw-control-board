@@ -16,7 +16,7 @@
     </header>
 
     <main class="content">
-      <!-- 系统监控区 - OpenClaw 核心指标 -->
+      <!-- 系统监控区 -->
       <section class="section">
         <h2 class="section-title">📊 系统监控</h2>
         <div class="monitor-grid">
@@ -59,7 +59,7 @@
         </div>
       </section>
 
-      <!-- Token 统计 - OpenClaw 特色 -->
+      <!-- Token 统计 -->
       <section class="section">
         <h2 class="section-title">💰 Token 统计 (今日)</h2>
         <div class="token-grid">
@@ -252,13 +252,13 @@
 </template>
 
 <script setup>
-// OpenClaw 专属仪表盘
+// OpenClaw 专属仪表盘 - 浅色风格
 </script>
 
 <style scoped>
 .dashboard {
   min-height: 100vh;
-  background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
   padding-bottom: 80px;
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans', sans-serif;
 }
@@ -269,9 +269,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .header-left {
@@ -292,7 +292,7 @@
 .header-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #1e293b;
   margin: 0;
   background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
   -webkit-background-clip: text;
@@ -302,16 +302,17 @@
 
 .header-subtitle {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: #64748b;
 }
 
 .header-status {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(34, 197, 94, 0.15);
+  background: rgba(34, 197, 94, 0.1);
   padding: 0.375rem 0.875rem;
   border-radius: 9999px;
+  border: 1px solid rgba(34, 197, 94, 0.2);
 }
 
 .status-dot {
@@ -324,7 +325,7 @@
 
 .status-text {
   font-size: 0.75rem;
-  color: #22c55e;
+  color: #16a34a;
   font-weight: 500;
 }
 
@@ -340,7 +341,7 @@
 .section-title {
   font-size: 1rem;
   font-weight: 600;
-  color: #e2e8f0;
+  color: #334155;
   margin-bottom: 1rem;
 }
 
@@ -354,8 +355,9 @@
 .card {
   padding: 1rem;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   min-height: 100px;
   display: flex;
   flex-direction: column;
@@ -369,57 +371,57 @@
 
 .card-title {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: #64748b;
   margin-bottom: 0.25rem;
 }
 
 .card-value {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: #1e293b;
 }
 
 .card-uptime {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
-  border-color: rgba(99, 102, 241, 0.3);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+  border-color: rgba(99, 102, 241, 0.15);
 }
 
 .card-uptime .card-value {
-  color: #a5b4fc;
+  color: #4f46e5;
 }
 
 .card-cpu {
-  background: linear-gradient(135deg, rgba(244, 63, 94, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
-  border-color: rgba(244, 63, 94, 0.3);
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.08) 0%, rgba(236, 72, 153, 0.08) 100%);
+  border-color: rgba(244, 63, 94, 0.15);
 }
 
 .card-cpu .card-value {
-  color: #fda4af;
+  color: #db2777;
 }
 
 .card-memory {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 197, 253, 0.2) 100%);
-  border-color: rgba(59, 130, 246, 0.3);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(147, 197, 253, 0.08) 100%);
+  border-color: rgba(59, 130, 246, 0.15);
 }
 
 .card-memory .card-value {
-  color: #93c5fd;
+  color: #2563eb;
 }
 
 .card-disk {
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(134, 239, 172, 0.2) 100%);
-  border-color: rgba(34, 197, 94, 0.3);
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(134, 239, 172, 0.08) 100%);
+  border-color: rgba(34, 197, 94, 0.15);
 }
 
 .card-disk .card-value {
-  color: #86efac;
+  color: #16a34a;
 }
 
 /* 进度条 */
 .progress-bar {
   width: 100%;
   height: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.08);
   border-radius: 9999px;
   margin-top: 0.5rem;
   overflow: hidden;
@@ -453,44 +455,45 @@
 .stat-card {
   padding: 1rem;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .stat-label {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: #64748b;
   margin-bottom: 0.5rem;
 }
 
 .stat-value {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: #1e293b;
 }
 
 .stat-value.success {
-  color: #4ade80;
+  color: #16a34a;
 }
 
 .stat-value.warning {
-  color: #fbbf24;
+  color: #d97706;
 }
 
 .stat-input {
-  border-color: rgba(99, 102, 241, 0.3);
+  border-color: rgba(99, 102, 241, 0.2);
 }
 
 .stat-output {
-  border-color: rgba(168, 85, 247, 0.3);
+  border-color: rgba(168, 85, 247, 0.2);
 }
 
 .stat-cost {
-  border-color: rgba(251, 191, 36, 0.3);
+  border-color: rgba(251, 191, 36, 0.2);
 }
 
 .stat-budget {
-  border-color: rgba(74, 222, 128, 0.3);
+  border-color: rgba(74, 222, 128, 0.2);
 }
 
 /* 服务状态 */
@@ -506,8 +509,9 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   padding: 0.875rem 1rem;
   border-radius: 12px;
   min-width: 130px;
@@ -528,13 +532,13 @@
 
 .service-name {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: #64748b;
 }
 
 .service-status {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #f1f5f9;
+  color: #1e293b;
 }
 
 /* 快捷操作 */
@@ -549,8 +553,9 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   padding: 1rem 0.5rem;
   border-radius: 12px;
   cursor: pointer;
@@ -558,8 +563,9 @@
 }
 
 .action-btn:active {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 1);
   transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .action-icon {
@@ -568,7 +574,7 @@
 
 .action-label {
   font-size: 0.625rem;
-  color: #94a3b8;
+  color: #64748b;
   font-weight: 500;
   text-align: center;
 }
@@ -581,8 +587,9 @@
 }
 
 .agent-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   padding: 1rem;
   border-radius: 12px;
   display: flex;
@@ -598,7 +605,7 @@
 .agent-name {
   font-size: 0.875rem;
   font-weight: 700;
-  color: #f1f5f9;
+  color: #1e293b;
 }
 
 .agent-role {
@@ -613,12 +620,12 @@
 
 .agent-select {
   width: 100%;
-  background: rgba(99, 102, 241, 0.15);
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.2);
   padding: 0.375rem 0.5rem;
   border-radius: 8px;
   font-size: 0.625rem;
-  color: #a5b4fc;
+  color: #4f46e5;
   cursor: pointer;
 }
 
@@ -633,8 +640,9 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   padding: 0.875rem 1rem;
   border-radius: 12px;
 }
@@ -652,7 +660,7 @@
 .session-name {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #f1f5f9;
+  color: #1e293b;
 }
 
 .session-meta {
@@ -668,13 +676,15 @@
 }
 
 .session-status.success {
-  background: rgba(74, 222, 128, 0.2);
-  color: #4ade80;
+  background: rgba(74, 222, 128, 0.15);
+  color: #16a34a;
+  border: 1px solid rgba(74, 222, 128, 0.25);
 }
 
 .session-status.warning {
-  background: rgba(251, 191, 36, 0.2);
-  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.15);
+  color: #d97706;
+  border: 1px solid rgba(251, 191, 36, 0.25);
 }
 
 /* 底部导航栏 */
@@ -685,10 +695,10 @@
   right: 0;
   display: flex;
   justify-content: space-around;
-  background: rgba(15, 15, 26, 0.95);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   padding: 0.75rem 0;
-  border-top: 1px solid rgba(99, 102, 241, 0.3);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .tab-item {
@@ -697,12 +707,12 @@
   align-items: center;
   gap: 0.25rem;
   text-decoration: none;
-  color: #64748b;
+  color: #94a3b8;
   transition: color 0.2s;
 }
 
 .tab-item.active {
-  color: #818cf8;
+  color: #6366f1;
 }
 
 .tab-icon {

@@ -110,13 +110,13 @@
 </template>
 
 <script setup>
-// OpenClaw 日志查询页面
+// OpenClaw 日志查询页面 - 浅色风格
 </script>
 
 <style scoped>
 .logs {
   min-height: 100vh;
-  background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
   padding-bottom: 80px;
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Noto Sans', sans-serif;
   display: flex;
@@ -129,9 +129,9 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1.5rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .header-left {
@@ -152,7 +152,7 @@
 .header-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #1e293b;
   margin: 0;
   background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
   -webkit-background-clip: text;
@@ -162,7 +162,7 @@
 
 .header-subtitle {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: #64748b;
 }
 
 /* 内容区域 */
@@ -181,24 +181,24 @@
 .filter-select,
 .filter-input {
   flex: 1;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 0.625rem 0.875rem;
   border-radius: 12px;
   font-size: 0.875rem;
-  color: #f1f5f9;
+  color: #1e293b;
 }
 
 .filter-select:focus,
 .filter-input:focus {
   outline: none;
-  border-color: rgba(99, 102, 241, 0.5);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
 .filter-select option {
-  background: #1a1a2e;
-  color: #f1f5f9;
+  background: #f8fafc;
+  color: #1e293b;
 }
 
 .filter-btn {
@@ -212,17 +212,19 @@
   cursor: pointer;
   flex-shrink: 0;
   transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
 }
 
 .filter-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
 }
 
 /* 日志列表 */
 .log-container {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
   padding: 0.75rem;
   max-height: calc(100vh - 220px);
@@ -235,7 +237,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.625rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   font-size: 0.75rem;
 }
 
@@ -244,12 +246,12 @@
 }
 
 .log-entry:hover {
-  background: rgba(99, 102, 241, 0.1);
+  background: rgba(99, 102, 241, 0.05);
   border-radius: 8px;
 }
 
 .log-time {
-  color: #64748b;
+  color: #94a3b8;
   flex-shrink: 0;
   font-size: 0.625rem;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
@@ -262,35 +264,36 @@
   font-size: 0.625rem;
   flex-shrink: 0;
   text-transform: uppercase;
+  border: 1px solid;
 }
 
 .log-level.info {
-  background: rgba(74, 222, 128, 0.15);
-  color: #4ade80;
-  border: 1px solid rgba(74, 222, 128, 0.3);
+  background: rgba(74, 222, 128, 0.1);
+  color: #16a34a;
+  border-color: rgba(74, 222, 128, 0.25);
 }
 
 .log-level.warning {
-  background: rgba(251, 191, 36, 0.15);
-  color: #fbbf24;
-  border: 1px solid rgba(251, 191, 36, 0.3);
+  background: rgba(251, 191, 36, 0.1);
+  color: #d97706;
+  border-color: rgba(251, 191, 36, 0.25);
 }
 
 .log-level.error {
-  background: rgba(248, 113, 113, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(248, 113, 113, 0.3);
+  background: rgba(248, 113, 113, 0.1);
+  color: #dc2626;
+  border-color: rgba(248, 113, 113, 0.25);
 }
 
 .log-source {
-  color: #a5b4fc;
+  color: #4f46e5;
   flex-shrink: 0;
   width: 80px;
   font-weight: 500;
 }
 
 .log-message {
-  color: #cbd5e1;
+  color: #475569;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -305,10 +308,10 @@
   right: 0;
   display: flex;
   justify-content: space-around;
-  background: rgba(15, 15, 26, 0.95);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   padding: 0.75rem 0;
-  border-top: 1px solid rgba(99, 102, 241, 0.3);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .tab-item {
@@ -317,12 +320,12 @@
   align-items: center;
   gap: 0.25rem;
   text-decoration: none;
-  color: #64748b;
+  color: #94a3b8;
   transition: color 0.2s;
 }
 
 .tab-item.active {
-  color: #818cf8;
+  color: #6366f1;
 }
 
 .tab-icon {
